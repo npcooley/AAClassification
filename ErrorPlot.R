@@ -188,25 +188,25 @@ PanelParams <- length(PanelFiles)
 # open graphics device
 # set panel arrangement
 if (PanelParams == 1L) {
-  pdf("errorplot.pdf",
+  pdf("ErrorPlot.pdf",
       height = 7,
       width = 7)
 } else if (PanelParams == 2L) {
-  pdf("errorplot.pdf",
+  pdf("ErrorPlot.pdf",
       height = 7,
       width = 3.5)
   layout(mat = matrix(data = 1:2,
                       nrow = 2,
                       ncol = 1))
 } else if (PanelParams == 3L) {
-  pdf("errorplot.pdf",
+  pdf("ErrorPlot.pdf",
       height = 7,
       width = 7)
   layout(mat = matrix(data = c(1, 0, 2, 3),
                       nrow = 2,
                       ncol = 2))
 } else if (PanelParams == 4L) {
-  pdf("errorplot.pdf",
+  pdf("ErrorPlot.pdf",
       height = 7,
       width = 7)
   layout(mat = matrix(data = c(1,3,2,4),
