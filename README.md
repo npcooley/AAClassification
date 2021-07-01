@@ -80,11 +80,11 @@ The cross validation scripts take in data with a specific format, and return dat
 
 The plotting script returns plots similar to, but not exact replicas of those present in the paper. Example outputs of this plotting script are provided below:
 
-![Error Rates Plotted](https://github.com/npcooley/AAClassification/blob/master/errorplot.pdf)
+![Error Rates Plotted](https://github.com/npcooley/AAClassification/blob/master/errorplot.jpeg)
 
-![Error Rates when classifiers are 60% Confident](https://github.com/npcooley/AAClassification/blob/master/ErrByConf60.pdf)
+![Error Rates when classifiers are 60% Confident](https://github.com/npcooley/AAClassification/blob/master/ErrByConf60.jpeg)
 
-![Error Rates when classifiers have classified 60% of classifiable sequences](https://github.com/npcooley/AAClassification/blob/master/ErrByClass60.pdf)
+![Error Rates when classifiers have classified 60% of classifiable sequences](https://github.com/npcooley/AAClassification/blob/master/ErrByClass60.jpeg)
 
 These output files have hard coded output names as `ErrorPlot.pdf`, `ErrByClass60.pdf`, and `ErrByConf60.pdf` respectively, and will be placed in R's working directory.
 
