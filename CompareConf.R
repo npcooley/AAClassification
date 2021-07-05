@@ -267,51 +267,123 @@ ColVector <- c(rgb(red = 0.95,
                    green = 0.05,
                    alpha = 0.25))
 
-pdf(paste0(TaxCode,
-           "_Comparison.pdf"),
-    height = 3.5,
-    width = 7)
+ColVector <- c('#e6194b',
+               '#3cb44b',
+               '#ffe119',
+               '#4363d8',
+               '#f58231',
+               '#911eb4',
+               '#46f0f0',
+               '#f032e6',
+               '#bcf60c',
+               '#fabebe',
+               '#008080',
+               '#e6beff',
+               '#9a6324',
+               '#fffac8',
+               '#800000',
+               '#aaffc3',
+               '#808000',
+               '#ffd8b1',
+               '#000075',
+               '#808080',
+               '#ffffff',
+               '#000000')[c(4,2)]
 
-layout(mat = matrix(data = 1:2,
-                    ncol = 2))
+AVal <- "40"
+ColVector <- paste0(ColVector,
+                    AVal)
+
+
+pdf(paste0(TaxCode,
+           "_PIDComparison.pdf"),
+    height = 7,
+    width = 7)
 par(mgp = c(2.2, 1.0, 0.0))
-par(mar = c(3.5, 3.5, 0.5, 1.0))
+par(mar=c(10, 10, 1, 1))
 plot(x = x,
      y = y,
-     pch = 20,
-     cex = 0.5,
+     pch = 16,
+     cex = 0.75,
      col = ifelse(test = xt == yt,
                   yes = ColVector[2L],
                   no = ColVector[1L]),
-     xlab = "IDTAXA Confidence",
-     ylab = "BLAST PID")
+     xlab = "IDTAXA Confidence (%)",
+     ylab = "BLAST PID (%)")
 legend("bottomright",
-       legend = c("Classifications agree",
-                  "Classifications disagree"),
+       legend = c("Classifications disagree",
+                  "Classifications agree"),
        border = NA,
-       pch = 20,
-       col = c("blue",
-               "red"),
+       pch = 16,
+       col = gsub(x = ColVector,
+                  pattern = "40$",
+                  replacement = ""),
        cex = 0.75)
+dev.off()
 
+pdf(paste0(TaxCode,
+           "_EVLComparison.pdf"),
+    height = 7,
+    width = 7)
 par(mgp = c(2.2, 1.0, 0.0))
-par(mar = c(3.5, 3.5, 0.5, 1.0))
+par(mar=c(10, 10, 1, 1))
+
+AxisPosition <- c(100,
+                  1e-18,
+                  1e-38,
+                  1e-58,
+                  1e-78,
+                  1e-99,
+                  1e-119,
+                  1e-139,
+                  1e-159,
+                  1e-180)
+AxisLabels <- c("Unassigned",
+                as.character(c(1e-18,
+                               1e-38,
+                               1e-58,
+                               1e-78,
+                               1e-99,
+                               1e-119,
+                               1e-139,
+                               1e-159,
+                               1e-180)))
+MinEVL <- 1e-180
+yy <- 10^(log10(MinEVL) * (z * 0.01))
+yy[yy == 1] <- 100
 plot(x = x,
-     y = z,
-     pch = 20,
+     y = yy,
+     pch = 16,
      cex = 0.5,
+     log = "y",
+     ylim = c(1, 1e-180),
      col = ifelse(test = xt == zt,
                   yes = ColVector[2L],
                   no = ColVector[1L]),
-     xlab = "IDTAXA Confidence",
-     ylab = "BLAST EVL as Confidence")
+     xlab = "IDTAXA Confidence (%)",
+     ylab = "BLAST EVL",
+     axes = FALSE,
+     frame.plot = TRUE)
+axis(side = 2,
+     at = AxisPosition,
+     labels = AxisLabels)
+axis.break(axis = 2,
+           breakpos = 1e-3)
+axis(side = 1,
+     at = seq(from = 0,
+              to = 100,
+              by = 20),
+     labels = seq(from = 0,
+                  to = 100,
+                  by = 20))
 legend("bottomright",
-       legend = c("Classifications agree",
-                  "Classifications disagree"),
+       legend = c("Classifications disagree",
+                  "Classifications agree"),
        border = NA,
-       pch = 20,
-       col = c("blue",
-               "red"),
+       pch = 16,
+       col = gsub(x = ColVector,
+                  pattern = "40$",
+                  replacement = ""),
        cex = 0.75)
 dev.off()
 

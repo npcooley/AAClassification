@@ -26,7 +26,7 @@ These scripts have a few minimal requirements:
 
 ## Usage
 
-5 RScripts are provided in this repo, they should be run directly through the `Rscript` command in terminal and as long as R has access to HMMER and BLAST when called upon in this way, and the required packages are installed, they should run to completion. For reference the approximate run times of the three main scripts on a 2019 Macbook Pro with 6 cores and 64 GB of RAM are on R 4.1.0, with HMMER 3.3.1 and BLAST 2.10.1, on the training data provided are:
+5 RScripts are provided in this repo, they should be run directly through the `Rscript` command in terminal and as long as R has access to HMMER and BLAST when called upon in this way, and the required packages are installed, they should run to completion. For reference the approximate run times of the three main scripts on a 2019 Macbook Pro with 6 cores and 64 GB of RAM in R 4.1.0, with HMMER 3.3.1 and BLAST 2.10.1, on the training data provided are:
 
 1. `ICrossVal.R` ~ 6 hours
 2. `BCrossVal.R` ~ for AAs 12-18 hours, for NTs 2-10 minutes (sw_traceback is used for AAs)
@@ -54,7 +54,7 @@ Holdouts is a list of lists of integers, each integer represents a sequence to b
 4. KEGG Taxonomy level 3
 5. KEGG Taxonomy level 4
 
-Sequences that had incomplete taxonomic information supplied had the lowest supplied level replicated downward to enforce a square taxonomy. Because of the uneven distribution of labels, holdouts at the KO level are dominated by non-singletons and almost every singleton is included in one of the ten CVs. As singletons become more common down the taxonomic levels, the distribution of singleton / non-singleton eventually becomes 1:1 in each CV at 1000 sequences each, for 2000 holdout sequences per CV. Only the first and fifth taxonomy levels are presented within the paper.
+Sequences that had incomplete taxonomic information supplied had the lowest supplied level replicated downward to enforce a square taxonomy. Because of the uneven distribution of labels, holdouts at the KO level are dominated by non-singletons and almost every singleton is included in one of the ten CVs. As singletons become more common down the taxonomic levels, the distribution of singleton / non-singleton eventually becomes 1:1 in each CV at 1000 sequences each, for 2000 holdout sequences per CV. Only the first and fifth taxonomy levels are presented within the manuscript.
 
 ```
 > str(Holdouts[1])
@@ -84,7 +84,7 @@ List of 5
  $ : chr [1:1672354] "Root; K00844; Eukaryotes; Arthropods; Insects; Insects" "Root; K00844; Eukaryotes; Animals; Arthropods; Chelicerates" "Root; K00844; Eukaryotes; Animals; Vertebrates; Reptiles" "Root; K00844; Eukaryotes; Animals; Arthropods; Insects" ...
 ```
 
-Seqs is an AAStringSet or DNAStringSet of sequences, each with a unique name to use as a test set for these methods. Both AAs and NTs were used in this paper and are supplied for transparency. The supplied sequences were webscraped from KEGG along with all of their relevant metadata.
+Seqs is an AAStringSet or DNAStringSet of sequences, each with a unique name to use as a test set for these methods. Both AAs and NTs were used in this manuscript and are supplied for transparency. The supplied sequences were webscraped from KEGG along with all of their relevant metadata.
 
 ```
 > Seqs
@@ -107,7 +107,7 @@ AAStringSet object of length 1672354:
 
 ```
 
-Users may replicate the work performed in the paper either completed using the supplied original data or from the supplied cross validation results with only the plotting script.
+Users may replicate the work performed in the manuscript either completed using the supplied original data or from the supplied cross validation results with only the plotting script.
 
 ### ICrossVal.R
 
@@ -119,7 +119,7 @@ The script requires three trailing arguments, and infers a fourth if it is not s
 $ Rscript </path/to/script/ICrossVal.R> <Input.RData> <1> <YourWellNamedOutput.RData>
 ```
 
-Like it's three counterparts `ICrossVal.R` expects input data to be in the specific format detailed above. The training data used in the paper is present in a zenodo repository HERE, but if users can replicate this format they could certainly supply their own. The integer argument references to the construction of the input training data and for the supplied data used in the paper can be 1-5. The third argument is simply the name users wish to assign to their output file. The fourth inferred argument allows users to force IDTAXA to use the standard amino acid alphabet, by simply including `TRUE` as a fourth argument. If it is not included it is inferred as `FALSE`. This script would require manipulation to produce the result for the literature alphabet supplied in the paper, but will work with the nucleotide data just fine.
+Like it's three counterparts `ICrossVal.R` expects input data to be in the specific format detailed above. The training data used in the manuscript is present in a zenodo repository HERE, but if users can replicate this format they could certainly supply their own. The integer argument references to the construction of the input training data and for the supplied data used in the manuscript can be 1-5. The third argument is simply the name users wish to assign to their output file. The fourth inferred argument allows users to force IDTAXA to use the standard amino acid alphabet, by simply including `TRUE` as a fourth argument. If it is not included it is inferred as `FALSE`. This script would require manipulation to produce the result for the literature alphabet supplied in the manuscript, but will work with the nucleotide data just fine.
 
 ### BCrossVal.R
 
@@ -141,7 +141,7 @@ These scripts were written to be minimally reproducible, they are not efficient 
 
 ### ErrorPlot.R
 
-This script takes in results generated by the previous three scripts and plots them. It has a unique argument syntax that is not particularly user friendly, but does work. Users supply the filepaths to results generated by the preceding scripts and seperate those results with SEP where they wish to delineate a new panel. not including any SEP's will lead to all supplied results being plotted in a single panel. The script is modestly smart, but not written to accommodate an adversarial user. It can generate a 1, 2, 3, or 4 panel figure, and will attempt to provide a legend to each panel with names derived from the input file names. It will additionally attempt to provide tables describing the Over-classification and Miss-classification rates present in the supplied data fixed at 60% confidence for each method, and fixed at 60% of non-singletons classified for each method. The script expects IDTAXA results to have names in the form of `METHOD_TaxLevel_AdditionalDescription.RData`, and HMMER and BLAST results to have names in the form of `METHOD_TaxLevel.RDATA`. Legend names and table entries will be derived and organized from these names. Data that are grouped together will be placed in the same panel.
+This script takes in results generated by the previous three scripts and plots them. It has a unique argument syntax that is not particularly user friendly, but does work. Users supply the filepaths to results generated by the preceding scripts and seperate those results with `SEP` where they wish to delineate a new panel. not including any `SEP`'s will lead to all supplied results being plotted in a single panel. The script is modestly smart, but not written to accommodate an adversarial user. It can generate a 1, 2, 3, or 4 panel figure, and will attempt to provide a legend to each panel with names derived from the input file names. It will additionally attempt to provide tables describing the Over-classification and Miss-classification rates present in the supplied data fixed at 60% confidence for each method, and fixed at 60% of non-singletons classified for each method. The script expects IDTAXA results to have names in the form of `METHOD_TaxLevel_AdditionalDescription.RData`, and HMMER and BLAST results to have names in the form of `METHOD_TaxLevel.RDATA`. Legend names and table entries will be derived and organized from these names. Data that are grouped together will be placed in the same panel.
 
 ```
 $ Rscript </path/to/script/ErrorPlot.R> <ResultFile_A_1.RDATA> <SEP> <ResultFile_A_2.RData>
@@ -149,7 +149,7 @@ $ Rscript </path/to/script/ErrorPlot.R> <ResultFile_A_1.RDATA> <SEP> <ResultFile
 
 ### Annotation Comparison
 
-The 5th Rscript in this repository generates a plot comparing annotations derived from BLAST and IDTAXA on any fasta file of protein sequences. Similar to the scripts described above, R must have access to BLAST. The script takes in 3 arguments in the format:
+The 5th Rscript in this repository generates a plot comparing annotations derived from BLAST and IDTAXA on any fasta file of protein sequences. This is the basis for figure 3 in the associated manuscript. Similar to the scripts described above, R must have access to BLAST. The script takes in 3 arguments in the format:
 
 ```
 $ Rscript </path/to/script/CompareConf.R> <20200923_AATrainingData.RData> <myfastafile.faa> <KEGGorganism_code>
@@ -163,15 +163,19 @@ Run under the conditions:
 $ Rscript ~/path/to/CompareConf.R ~/path/to/20200923_AATraining.RData https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/011/074/885/GCF_011074885.1_ASM1107488v2/GCF_011074885.1_ASM1107488v2_protein.faa.gz bbrx
 ```
 
-It will produce the following plot, present in figure 3 of the manuscript:
+It will produce the following plots, which is represented in figure 3 of the manuscript:
 
-![Compare annotations in a recently submitted complete eukaryotic genome](https://github.com/npcooley/AAClassification/blob/master/bbrx_Comparison.jpeg)
+![Compare annotations in a recently submitted complete eukaryotic genome in PID space](https://github.com/npcooley/AAClassification/blob/master/bbrx_PIDComparison.jpeg)
+
+and:
+
+![Compare annotations in a recently submitted complete eukaryotic genome in EVL space](https://github.com/npcooley/AAClassification/blob/master/bbrx_EVLComparison.jpeg)
 
 ## Outputs
 
-The cross validation scripts take in data with a specific format, and return data with a specific format. Users can either run these with the supplied data used in the paper, or generate their own input data to test. Some manual manipulation will be needed to recreate the IDTAXA results for the tested literature alphabet, but that shouldn't be out of the scope of skills of anyone attempting to recreate this work.
+The cross validation scripts take in data with a specific format, and return data with a specific format. Users can either run these with the supplied data used in the manuscript, or generate their own input data to test. Some manual manipulation will be needed to recreate the IDTAXA results for the tested literature alphabet, but that shouldn't be out of the scope of skills of anyone attempting to recreate this work.
 
-The plotting script returns plots similar to, but not exact replicas of those present in the paper. Example outputs of this plotting script are provided below:
+The plotting script returns plots similar to, but not exact replicas of those present in the manuscript. Example outputs of this plotting script are provided below:
 
 Plotting over-classification and miss-classification rates for tested classifiers:
 
