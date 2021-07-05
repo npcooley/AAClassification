@@ -14,6 +14,7 @@
 ###### -- Libraries -----------------------------------------------------------
 
 suppressMessages(library(DECIPHER))
+suppressMessages(library(plotrix))
 
 ###### -- Arguments -----------------------------------------------------------
 
@@ -229,6 +230,7 @@ class(ERes) <- c("Taxa", "Test")
 save(PRes,
      ERes,
      IRes,
+     Res,
      file = paste0(TaxCode,
                    "_Result.RData"),
      compress = "xz")

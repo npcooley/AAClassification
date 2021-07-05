@@ -22,7 +22,8 @@ These scripts have a few minimal requirements:
 3. BLAST 2.10.1 or greater
 4. HMMER 3.3.1 or greater
 5. R must have access to both HMMER and BLAST
-6. gridExtra is required to plot tables
+6. gridExtra is required to plot tables in the `ErrorPlot.R` script
+7. plotrix is required to plot figures in the `CompareConf.R` script
 
 ## Usage
 
@@ -155,7 +156,7 @@ The 5th Rscript in this repository generates a plot comparing annotations derive
 $ Rscript </path/to/script/CompareConf.R> <20200923_AATrainingData.RData> <myfastafile.faa> <KEGGorganism_code>
 ```
 
-This should hypothetically work with any set of protein fasta files requested from the NCBI FTP site, or that users have locally, but this script wasn't designed to be exceptionally robust. *Brettanomyces bruxellensis* was chosen for it's relatively recent addition as a complete assembly to RefSeq, and the relative scarcity of KEGG sequences containing the *B. bruxellensis* organism code in the training set. The script uses this code to remove those associated sequences from the training set, attempting to ensure that all sequences compared, are compared without themselves being present in the training data.
+This script should hypothetically work with any set of protein fasta files requested from the NCBI FTP site, or that users have locally, but this script wasn't designed to be exceptionally robust. *Brettanomyces bruxellensis* was chosen for it's relatively recent addition as a complete assembly to RefSeq, and the relative scarcity of KEGG sequences containing the *B. bruxellensis* organism code in the training set. The script uses this code to remove those associated sequences from the training set, attempting to ensure that all sequences compared, are compared without themselves being present in the training data.
 
 Run under the conditions:
 
@@ -170,6 +171,8 @@ It will produce the following plots, which is represented in figure 3 of the man
 and:
 
 ![Compare annotations in a recently submitted complete eukaryotic genome in EVL space](https://github.com/npcooley/AAClassification/blob/master/bbrx_EVLComparison.jpeg)
+
+These plots have hardcoded output names and will be placed into R's working directory alongside an RData file containing the results that were used to generate these figures. Respectively, these plots will be named `<providedtaxcode>_PIDComparison.pdf`, `<providedtaxcode>_EVLComparison.pdf`, and the data will be named `<providedtaxcode>_Result.RData`.
 
 ## Outputs
 
