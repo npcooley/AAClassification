@@ -581,7 +581,7 @@ for (m1 in seq_len(L)) {
                          " ",
                          TEMP01,
                          sep = ""),
-         intern = FALSE)
+         intern = TRUE) -> z
   
   Res[[m1]] <- readLines(TEMP03)
   
@@ -589,9 +589,14 @@ for (m1 in seq_len(L)) {
                 split = "[ ]+",
                 fixed = FALSE)
   x <- x[lengths(x) == 19L]
-  x <- x[-1L]
   x <- do.call(rbind,
                x)
+  
+  if (any(grepl(x = x[, 1L],
+                pattern = "^#"))) {
+    x <- x[!grepl(pattern = "^#",
+                  x = x[, 1L]), ]
+  }
   colnames(x) <- c("Target_name",
                    "accession",
                    "query_name",
