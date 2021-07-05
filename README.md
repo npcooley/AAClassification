@@ -155,7 +155,7 @@ The 5th Rscript in this repository generates a plot comparing annotations derive
 $ Rscript </path/to/script/CompareConf.R> <20200923_AATrainingData.RData> <myfastafile.faa> <KEGGorganism_code>
 ```
 
-This should hypothetically work with any set of protein fasta files requested from the NCBI FTP site, or that users have locally, but this script wasn't designed to be exceptionally robust. Brettanomyces bruxellensis was chosen for it's relatively recent addition as a complete assembly to RefSeq, and the relative scarcity of KEGG sequences containing the B. bruxellensis organism code in the training set. The script uses this code to remove those associated sequences from the training set, attempting to ensure that all sequences compared, are compared without themselves being present in the training data.
+This should hypothetically work with any set of protein fasta files requested from the NCBI FTP site, or that users have locally, but this script wasn't designed to be exceptionally robust. *Brettanomyces bruxellensis* was chosen for it's relatively recent addition as a complete assembly to RefSeq, and the relative scarcity of KEGG sequences containing the *B. bruxellensis* organism code in the training set. The script uses this code to remove those associated sequences from the training set, attempting to ensure that all sequences compared, are compared without themselves being present in the training data.
 
 Run under the conditions:
 
