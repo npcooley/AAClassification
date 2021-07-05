@@ -11,7 +11,7 @@
 
 This repository contains scripts for reproducing figures in the manuscript Accurate Annotation of Protein Sequences with IDTAXA. For the sake of reproducibility, these scripts do not assume any particular parallelization schemes or schedulers. Processes are run sequentially within scripts to make them as broadly accessible as possible. These scripts should work in both Linux or Mac environments, and have not been tested on Windows.
 
-These scripts are designed to work with input files that are present on [zenodo](https://doi.org/10.5281/zenodo.5057027). Outputs of these scripts used in the construction of figures are also present on zenodo.
+These scripts are designed to work with input files that are present on [zenodo](https://doi.org/10.5281/zenodo.5057027). Outputs of these scripts used in the construction of figures are also present on [zenodo](https://doi.org/10.5281/zenodo.5071174).
 
 ## Requirements
 

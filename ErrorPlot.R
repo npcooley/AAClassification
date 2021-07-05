@@ -368,7 +368,7 @@ for (m1 in seq_along(PanelFiles)) {
           KOOverConf[w] <- D[[4]][2, 4] # over class where Conf is 60%
           KOMissConf[w] <- D[[4]][3, 4] # miss class where Conf is 60%
           KOConfConv[w] <- w1 * 0.001
-          KOConfConv[w] <- 10^(log10(x * KOConfConv[w]))
+          KOConfConv[w] <- 10^(log10(x) * KOConfConv[w])
         } else {
           w1 <- which.min(abs(D[[1]] - .6))
           TAXOverClass[w] <- D[[2]][w1] # over class where 60 % of classifiables classified
@@ -376,7 +376,7 @@ for (m1 in seq_along(PanelFiles)) {
           TAXOverConf[w] <- D[[4]][2, 4] # over class where Conf is 60%
           TAXMissConf[w] <- D[[4]][3, 4] # miss class where Conf is 60%
           TAXConfConv[w] <- w1 * 0.001
-          TAXConfConv[w] <- 10^(log10(x * TAXConfConv[w]))
+          TAXConfConv[w] <- 10^(log10(x) * TAXConfConv[w])
         }
       } else {
         # row name has not been specified, add it
@@ -393,7 +393,7 @@ for (m1 in seq_along(PanelFiles)) {
           KOOverConf[w] <- D[[4]][2, 4] # over class where Conf is 60%
           KOMissConf[w] <- D[[4]][3, 4] # miss class where Conf is 60%
           KOConfConv[w] <- w1 * 0.001
-          KOConfConv[w] <- 10^(log10(x * KOConfConv[w]))
+          KOConfConv[w] <- 10^(log10(x) * KOConfConv[w])
         } else {
           w1 <- which.min(abs(D[[1]] - .6))
           TAXOverClass[w] <- D[[2]][w1] # over class where 60 % of classifiables classified
@@ -401,7 +401,7 @@ for (m1 in seq_along(PanelFiles)) {
           TAXOverConf[w] <- D[[4]][2, 4] # over class where Conf is 60%
           TAXMissConf[w] <- D[[4]][3, 4] # miss class where Conf is 60%
           TAXConfConv[w] <- w1 * 0.001
-          TAXConfConv[w] <- 10^(log10(x * TAXConfConv[w]))
+          TAXConfConv[w] <- 10^(log10(x) * TAXConfConv[w])
         }
         TableRowNames[nchar(TableRowNames) == 0L][1L] <- ph2
       }
@@ -453,7 +453,7 @@ for (m1 in seq_along(PanelFiles)) {
           KOOverConf[w] <- D[[4]][2, 4] # over class where Conf is 60%
           KOMissConf[w] <- D[[4]][3, 4] # miss class where Conf is 60%
           KOConfConv[w] <- w1 * 0.001
-          KOConfConv[w] <- 10^(log10(min(Res$evalue[Res$evalue > 0]) * KOConfConv[w]))
+          KOConfConv[w] <- 10^(log10(min(Res$evalue[Res$evalue > 0])) * KOConfConv[w])
         } else {
           w1 <- which.min(abs(D[[1]] - .6))
           TAXOverClass[w] <- D[[2]][w1] # over class where 60 % of classifiables classified
@@ -461,7 +461,7 @@ for (m1 in seq_along(PanelFiles)) {
           TAXOverConf[w] <- D[[4]][2, 4] # over class where Conf is 60%
           TAXMissConf[w] <- D[[4]][3, 4] # miss class where Conf is 60%
           TAXConfConv[w] <- w1 * 0.001
-          KOConfConv[w] <- 10^(log10(min(Res$evalue[Res$evalue > 0]) * TAXConfConv[w]))
+          TAXConfConv[w] <- 10^(log10(min(Res$evalue[Res$evalue > 0])) * TAXConfConv[w])
         }
       } else {
         # row name has not been specified, add it
@@ -476,7 +476,7 @@ for (m1 in seq_along(PanelFiles)) {
           KOOverConf[w] <- D[[4]][2, 4] # over class where Conf is 60%
           KOMissConf[w] <- D[[4]][3, 4] # miss class where Conf is 60%
           KOConfConv[w] <- w1 * 0.001
-          KOConfConv[w] <- 10^(log10(min(Res$evalue[Res$evalue > 0]) * KOConfConv[w]))
+          KOConfConv[w] <- 10^(log10(min(Res$evalue[Res$evalue > 0])) * KOConfConv[w])
         } else {
           w1 <- which.min(abs(D[[1]] - .6))
           TAXOverClass[w] <- D[[2]][w1] # over class where 60 % of classifiables classified
@@ -484,7 +484,7 @@ for (m1 in seq_along(PanelFiles)) {
           TAXOverConf[w] <- D[[4]][2, 4] # over class where Conf is 60%
           TAXMissConf[w] <- D[[4]][3, 4] # miss class where Conf is 60%
           TAXConfConv[w] <- w1 * 0.001
-          TAXConfConv[w] <- 10^(log10(min(Res$evalue[Res$evalue > 0]) * TAXConfConv[w]))
+          TAXConfConv[w] <- 10^(log10(min(Res$evalue[Res$evalue > 0])) * TAXConfConv[w])
         }
         TableRowNames[nchar(TableRowNames) == 0L][1L] <- ph3
       }
