@@ -353,10 +353,10 @@ cat("\n")
 cat("\nCVs completed in:\n")
 print(TimeInt - TimeStart)
 
-CRes <- do.call(c,
+IRes <- do.call(c,
                 Res)
 
-CPerf <- OC_MC_FromIDTaxa(ResList = CRes,
+IPerf <- OC_MC_FromIDTaxa(ResList = IRes,
                           Taxonomy = TaxVectors[[TargetTax]],
                           ResPositions = unlist(Holdouts[[TargetTax]]),
                           IncludeConf = TRUE,
