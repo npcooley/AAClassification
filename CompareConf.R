@@ -151,7 +151,7 @@ train <- LearnTaxa(train = Seqs,
 
 IRes <- IdTaxa(test = TargetSeqs,
                trainingSet = train,
-               fullLength = 0.95,
+               fullLength = 0.99,
                threshold = 0,
                verbose = TRUE)
 
@@ -204,6 +204,8 @@ for (m2 in seq_along(TargetSeqs)) {
   setTxtProgressBar(pb = pBar,
                     value = m2 / length(ph1))
 }
+
+cat("\n")
 
 EVL <- (-log10(EVL) / max(-log10(EVL))) * 100
 PRes <- ERes <- vector(mode = "list",

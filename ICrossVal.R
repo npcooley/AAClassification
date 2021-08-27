@@ -11,16 +11,21 @@
 # R must have access to these executables
 # which means that they must be in the PATH
 
-# This script takes in two arguments
-# 1) an RData file that contains 3 associated arguments
+# This script takes in 4 arguments, the fourth can be left blank, in which case
+# it is inferred to be selecting a default reduced alphabet
+# 1) an RData file that contains 3 objects that are associated to one another
 # 1a) an XStringSet names Seqs
 # 1b) a list named Holdouts
 # 1c) a list named TaxVectors
-# 2) an integer
+# 2) an integer 1-5 - select the tax level to test
 # 3) an output file name
+# 4) an integer 1-3 - select the alphabet to use:
+# 1 - AA_REDUCED[[139]]
+# 2 - AA_STANDARD
+# 3 - Lit alphabet
 
 # the usage of this script should look like:
-# $Rscript <thisscript.R> <my_rdatafile.RData> <some_integer> <myresult.RData>
+# $Rscript <thisscript.R> <my_rdatafile.RData> <integer_describing_tax_level> <myresult.RData> <integer_selecting_alphabet>
 
 # Seqs is an xstringset that has unique KEGG IDs for sequence names
 
@@ -45,13 +50,26 @@ Args <- commandArgs(trailingOnly = TRUE)
 InFile <- Args[1L]
 TargetTax <- as.integer(Args[2L])
 OutFile <- Args[3L]
-
-if (length(Args) < 4) {
-  UseStandardAlphabet <- FALSE
+if (length(Args) < 4L) {
+  AlphabetSelector <- 1L
 } else {
-  UseStandardAlphabet <- as.logical(Args[4L])
+  AlphabetSelector <- as.integer(Args[4L])
 }
 
+
+if (AlphabetSelector == 1L) {
+  
+  SelectedAlphabet <- AA_REDUCED[[139]]
+  
+} else if (AlphabetSelector == 2L) {
+  
+  SelectedAlphabet <- AA_STANDARD
+  
+} else if (AlphabetSelector == 3L) {
+  
+  SelectedAlphabet <- c("AST", "CFWY", "DEQ", "G", "HN", "ILMV", "KR", "P")
+  
+}
 
 ###### -- Functions -----------------------------------------------------------
 
@@ -309,6 +327,9 @@ pBar <- txtProgressBar(style = 1L)
 Res <- vector(mode = "list",
               length = L)
 
+SeqType <- is(object = Seqs,
+              class2 = "AAStringSet")
+
 cat("\nBeginning CVs.\n")
 for (m1 in seq_len(L)) {
   
@@ -316,18 +337,21 @@ for (m1 in seq_len(L)) {
   ph <- Holdouts[[TargetTax]][[m1]]
   
   # learn the taxonomy minus the holdouts
-  if (UseStandardAlphabet) {
+  # if `Seqs` is an AAStringSet run with an alphabet selected
+  # if not don't
+  if (SeqType) {
     train <- LearnTaxa(train = Seqs[-ph],
                        taxonomy = TaxVectors[[TargetTax]][-ph],
                        maxChildren = 1, # for the provided data
-                       alphabet = AA_STANDARD,
+                       alphabet = SelectedAlphabet,
                        verbose = FALSE)
     
     Res[[m1]] <- IdTaxa(test = Seqs[ph],
                         trainingSet = train,
-                        fullLength = 0.95,
+                        fullLength = 0.99,
                         threshold = 0,
-                        verbose = FALSE)
+                        verbose = FALSE,
+                        processors = detectCores())
   } else {
     train <- LearnTaxa(train = Seqs[-ph],
                        taxonomy = TaxVectors[[TargetTax]][-ph],
@@ -336,9 +360,10 @@ for (m1 in seq_len(L)) {
     
     Res[[m1]] <- IdTaxa(test = Seqs[ph],
                         trainingSet = train,
-                        fullLength = 0.95,
+                        fullLength = 0.99,
                         threshold = 0,
-                        verbose = FALSE)
+                        verbose = FALSE,
+                        processors = detectCores())
   }
   
   
@@ -366,8 +391,11 @@ TimeStop <- Sys.time()
 
 ###### -- Save Results --------------------------------------------------------
 
+TotalTime <- TimeStop - TimeStart
+
 save(IRes, # IDTaxa result
      IPerf, # IDTaxa performance
+     TotalTime, # Total running time
      file = OutFile,
      compress = "xz")
 
